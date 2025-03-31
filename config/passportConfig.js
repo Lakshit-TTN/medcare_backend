@@ -29,25 +29,6 @@ passport.use(
   )
 );
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET,
-};
-
-passport.use(
-  new JwtStrategy(jwtOptions, async (jwt_payload, done) => {
-    try {
-      const user = await pool.query("SELECT id, name, email ,role FROM users WHERE id = $1", [jwt_payload.id]);
-      if (user.rows.length === 0) {
-        return done(null, false);
-      }
-      return done(null, user.rows[0]);
-    } catch (error) {
-      return done(error, false);
-    }
-  })
-);
-
 passport.use(
   new GoogleStrategy(
     {
