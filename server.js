@@ -9,6 +9,7 @@ import adminRoutes from "./routes/admin.js"; // Add `.js` extension
 import upload from "./routes/upload.js"; // Add `.js` extension
 import user from "./routes/user.js"; // Add `.js` extension
 import { authenticateAdmin } from "./middleware/isAdmin.js";
+import authenticateUser from "./middleware/authMiddleware.js";
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ app.use("/public", express.static("public"));
 app.use(passport.initialize());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/doctors",doctorRoutes );
+app.use("/api/doctors",authenticateUser,doctorRoutes );
 app.use("/api/appointments",appointmentRoutes);
 app.use("/api/admin",authenticateAdmin,adminRoutes);
 app.use("/api",upload);

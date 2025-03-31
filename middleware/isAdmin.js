@@ -6,7 +6,6 @@ export const authenticateAdmin = (req, res, next) => {
   }
   const token = authHeader.split(" ")[1];
   const verification = verifyToken(token);
-  console.log("Token Verification:", verification);
   if (!verification.valid) {
     return res.status(401).json({ message: verification.message });
   }
